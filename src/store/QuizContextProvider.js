@@ -138,6 +138,11 @@ const qns = [
 const QuizContextProvider = ({ children }) => {
 
     const [answers, setAnswers] = useState([])
+    const [timeTaken, setTimeTaken] = useState()
+
+    const completionTime = (time) => {
+        setTimeTaken(60 - time)
+    }
 
     const addAnswer = (ans, id) => {
         let existing = answers.find(ans => ans.qId === id)
@@ -153,6 +158,7 @@ const QuizContextProvider = ({ children }) => {
 
     const reset = () => {
         setAnswers([])
+        setTimeTaken()
     }
     // console.log(answers)
     // console.log(score)
@@ -161,7 +167,9 @@ const QuizContextProvider = ({ children }) => {
         qns,
         addAnswer,
         score: score,
-        reset
+        reset,
+        timeTaken: timeTaken,
+        completionTime
     }
 
     return (

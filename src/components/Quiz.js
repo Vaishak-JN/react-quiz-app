@@ -8,8 +8,18 @@ import Timer from "./Timer"
 const Quiz = () => {
 
     const [index, setIndex] = useState(0)
-    const { qns } = useContext(QuizContext)
+    const { qns, completionTime } = useContext(QuizContext)
     const [final, setFinal] = useState(false)
+
+    const [time, setTime] = useState(60)
+
+    const counter = () => {
+        if (time === 0) {
+            submit()
+            return
+        }
+        setTime(prev => prev - 1)
+    }
 
 
     const navigate = useNavigate()
@@ -27,6 +37,7 @@ const Quiz = () => {
     }
 
     const submit = () => {
+        completionTime(time)
         navigate("/result")
     }
 
@@ -34,7 +45,7 @@ const Quiz = () => {
 
     return (
         <div className="quiz">
-            <Timer />
+            <Timer time={time} counter={counter} />
             <h2>Q{index + 1}. {qns[index].question}</h2>
 
             <OptionsList index={index} />
